@@ -1,13 +1,13 @@
-// Expert system: volume + budget calculations, and simple automated planning.
+// Sistema experto: cálculos de volumen y presupuesto, y planificación automatizada sencilla.
 
 export type FurnitureType = "mesa" | "silla" | "escritorio";
 export type WoodType = "pino" | "cedro" | "roble";
 
 export interface WoodSpec {
   label: string;
-  // cost per m³ (COP)
+  // costo por m³ (COP)
   costPerM3: number;
-  // multiplier applied to base hours per task (harder wood -> slower)
+ // multiplicador aplicado a las horas base por tarea (madera más dura -> más lento)
   timeFactor: number;
 }
 
@@ -45,7 +45,7 @@ export interface Quote {
   laborHours: number;
 }
 
-const HOURLY_RATE = 22_000; // COP/hour
+const HOURLY_RATE = 22_000; // COP/HORA
 const OVERHEAD_PCT = 0.12;
 const PROFIT_PCT = 0.35;
 
@@ -54,7 +54,7 @@ export function calculateQuote(input: QuoteInput): Quote {
   const wSpec = WOODS[wood];
   const fSpec = FURNITURE[furniture];
 
-  // Geometric volume in m³ with waste
+  // Volumen geométrico en m³ con desperdicio
   const rawVolume = (alto / 100) * (ancho / 100) * (largo / 100);
   const volumeM3 = rawVolume * (1 + fSpec.wastePct);
 

@@ -1,5 +1,5 @@
-// JWT auth prototype with real server-side verification via GET /api/auth/verify.
-// Tokens are simulated base64 payloads stored in localStorage.
+// Prototipo de autenticación JWT con verificación real en el servidor mediante GET /api/auth/verify.
+// Los tokens son cargas útiles (payloads) simuladas en base64 almacenadas en localStorage.
 
 export type Role = "admin" | "carpintero";
 
@@ -62,7 +62,7 @@ export function getToken(): string | null {
   return localStorage.getItem(STORAGE_KEY);
 }
 
-// Local decode — used as fast path before hitting the server.
+// Decodificación local: utilizada como vía rápida antes de llegar al servidor.
 export function getCurrentUser(): AuthUser | null {
   const token = getToken();
   if (!token) return null;
@@ -80,8 +80,8 @@ export function getCurrentUser(): AuthUser | null {
   }
 }
 
-// Server-side verification. Returns the user when the token is still valid
-// according to the backend, or null (and clears the local token) otherwise.
+// Verificación del lado del servidor. Devuelve el usuario si el token sigue siendo válido
+// según el backend, o null (y borra el token local) en caso contrario.
 export async function verifySession(): Promise<AuthUser | null> {
   const token = getToken();
   if (!token) return null;
@@ -101,12 +101,12 @@ export async function verifySession(): Promise<AuthUser | null> {
     }
     return data.user;
   } catch {
-    // Network failure — fall back to local decode so offline reloads still work.
+    // Fallo de red: se recurre a la decodificación local para que las recargas sin conexión sigan funcionando.
     return getCurrentUser();
   }
 }
 
-// Simulated fetch interceptor — attaches Authorization header
+// Interceptor de fetch simulado: añade la cabecera Authorization
 export function authFetch(input: RequestInfo, init: RequestInit = {}) {
   const token = getToken();
   const headers = new Headers(init.headers);

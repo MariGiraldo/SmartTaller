@@ -1,5 +1,5 @@
-// Captures the original Error out-of-band so server.ts can recover the stack
-// when h3 has already swallowed the throw into a generic 500 Response.
+// Captura el error original fuera de la ruta principal para que server.ts pueda recuperar la traza de la pila
+// cuando h3 ya ha convertido la excepción en una respuesta genérica 500.
 
 let lastCapturedError: { error: unknown; at: number } | undefined;
 const TTL_MS = 5_000;
